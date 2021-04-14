@@ -7,10 +7,10 @@ namespace QuickSort
 	template<typename T>
 	size_t Partition(T* arr, size_t begin, size_t end)
 	{
-        T* pivot = &arr[end];    // pivot
-        int i = (begin - 1);  // Index of smaller element
+        T* pivot = &arr[end];
+        size_t i = begin - 1;
 
-        for (size_t j = begin; j <= end - 1; j++)
+        for (size_t j = begin; j < end; j++)
         {
             if (arr[j] <= *pivot)
             {
@@ -23,13 +23,22 @@ namespace QuickSort
 	}
 
 	template<typename T>
-	void Sort(T* arr, size_t begin, size_t end)
+	void QuickSort(T* arr, size_t begin, size_t end)
 	{
         if (begin < end)
         {
-            int pi = Partition(arr, begin, end);
-            Sort(arr, begin, pi - 1);
-            Sort(arr, pi + 1, end);
+            size_t pi = Partition(arr, begin, end);
+            if (pi > 0)
+            {
+                QuickSort(arr, begin, pi - 1);
+            }
+            QuickSort(arr, pi + 1, end);
         }
 	}
+
+    template<typename T>
+    void Sort(T* arr, size_t size)
+    {
+        QuickSort(arr, 0, size - 1);
+    }
 }
