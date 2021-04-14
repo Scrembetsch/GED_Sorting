@@ -18,6 +18,19 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Timing.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\ArgumentParser.h" />
+    <ClInclude Include="src\BubbleSort.h" />
+    <ClInclude Include="src\BucketSort.h" />
+    <ClInclude Include="src\ComplexObject.h" />
+    <ClInclude Include="src\InsertionSort.h" />
+    <ClInclude Include="src\QuickSort.h" />
+    <ClInclude Include="src\Random.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -138,9 +151,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="GED_Sorting.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
