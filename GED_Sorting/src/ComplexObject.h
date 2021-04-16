@@ -31,6 +31,11 @@ struct ComplexObject
 	int c;
 	int d;
 	int e;
+
+	operator size_t() const
+	{
+		return key;
+	}
 };
 
 bool operator<(const ComplexObject& lhs, const ComplexObject& rhs)
@@ -69,3 +74,4 @@ bool operator>=(const ComplexObject& lhs, const ComplexObject& rhs)
 {
 	return !(lhs < rhs);
 }
+
