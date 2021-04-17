@@ -11,10 +11,10 @@
 #include "QuickSort.h"
 #include "BucketSort.h"
 
-const size_t IntCacheSize = 1000;
-const size_t IntRamSize = 10000;
+const size_t IntCacheSize = 10;
+const size_t IntRamSize = 100000;
 const size_t ObjectCacheSize = 1000;
-const size_t ObjectRamSize = 10000;
+const size_t ObjectRamSize = 100000;
 
 int* IntCache;
 int* IntRam;
@@ -44,6 +44,14 @@ void PrintArray(int* arr, size_t size)
 	std::cout << std::endl;
 }
 
+void PrintArray(int** arr, size_t size)
+{
+	for (size_t i = 0; i < size; i++)
+	{
+		std::cout << *arr[i] << ";";
+	}
+	std::cout << std::endl;
+}
 void PrintArray(ComplexObject* arr, size_t size)
 {
 	for (size_t i = 0; i < size; i++)
@@ -53,156 +61,45 @@ void PrintArray(ComplexObject* arr, size_t size)
 	std::cout << std::endl;
 }
 
-void Variant1()
+void PrintArray(ComplexObject** arr, size_t size)
 {
-	std::string variant("Variant 1 - ");
+	for (size_t i = 0; i < size; i++)
+	{
+		std::cout << (*arr[i]).ToString() << ";";
+	}
+	std::cout << std::endl;
+}
 
-	int* bubbleCopy = new int[IntCacheSize];
-	CopyArray(IntCache, bubbleCopy, IntCacheSize);
+template<typename T>
+void VariantTest(const std::string& variant, T* originalArray, size_t size)
+{
+	T* bubbleCopy = new T[size];
+	CopyArray(originalArray, bubbleCopy, size);
 	Timing::getInstance()->startRecord(variant + "Bubble", true);
-	BubbleSort::Sort(bubbleCopy, IntCacheSize);
+	BubbleSort::Sort(bubbleCopy, size);
 	Timing::getInstance()->stopRecord(variant + "Bubble");
 	delete[] bubbleCopy;
 
-	int* insertCopy = new int[IntCacheSize];
-	CopyArray(IntCache, insertCopy, IntCacheSize);
+	T* insertCopy = new T[size];
+	CopyArray(originalArray, insertCopy, size);
 	Timing::getInstance()->startRecord(variant + "Insertion", true);
-	InsertionSort::Sort(insertCopy, IntCacheSize);
+	InsertionSort::Sort(insertCopy, size);
 	Timing::getInstance()->stopRecord(variant + "Insertion");
 	delete[] insertCopy;
 
-	int* quickCopy = new int[IntCacheSize];
-	CopyArray(IntCache, quickCopy, IntCacheSize);
+	T* quickCopy = new T[size];
+	CopyArray(originalArray, quickCopy, size);
 	Timing::getInstance()->startRecord(variant + "Quick", true);
-	QuickSort::Sort(quickCopy, IntCacheSize);
+	QuickSort::Sort(quickCopy, size);
 	Timing::getInstance()->stopRecord(variant + "Quick");
 	delete[] quickCopy;
 
-	int* bucketCopy = new int[IntCacheSize];
-	CopyArray(IntCache, bucketCopy, IntCacheSize);
+	T* bucketCopy = new T[size];
+	CopyArray(originalArray, bucketCopy, size);
 	Timing::getInstance()->startRecord(variant + "Bucket", true);
-	BucketSort::Sort(bucketCopy, IntCacheSize);
+	BucketSort::Sort(bucketCopy, size);
 	Timing::getInstance()->stopRecord(variant + "Bucket");
 	delete[] bucketCopy;
-}
-
-void Variant2()
-{
-	std::string variant("Variant 2 - ");
-
-	int* bubbleCopy = new int[IntRamSize];
-	CopyArray(IntRam, bubbleCopy, IntRamSize);
-	Timing::getInstance()->startRecord(variant + "Bubble", true);
-	BubbleSort::Sort(bubbleCopy, IntRamSize);
-	Timing::getInstance()->stopRecord(variant + "Bubble");
-	delete[] bubbleCopy;
-
-	int* insertCopy = new int[IntRamSize];
-	CopyArray(IntRam, insertCopy, IntRamSize);
-	Timing::getInstance()->startRecord(variant + "Insertion", true);
-	InsertionSort::Sort(insertCopy, IntRamSize);
-	Timing::getInstance()->stopRecord(variant + "Insertion");
-	delete[] insertCopy;
-
-	int* quickCopy = new int[IntRamSize];
-	CopyArray(IntRam, quickCopy, IntRamSize);
-	Timing::getInstance()->startRecord(variant + "Quick", true);
-	QuickSort::Sort(quickCopy, IntRamSize);
-	Timing::getInstance()->stopRecord(variant + "Quick");
-	delete[] quickCopy;
-
-	int* bucketCopy = new int[IntRamSize];
-	CopyArray(IntRam, bucketCopy, IntRamSize);
-	Timing::getInstance()->startRecord(variant + "Bucket");
-	BucketSort::Sort(bucketCopy, IntRamSize);
-	Timing::getInstance()->stopRecord(variant + "Bucket");
-	delete[] bucketCopy;
-}
-
-void Variant3()
-{
-	std::string variant("Variant 3 - ");
-
-	ComplexObject* bubbleCopy = new ComplexObject[IntCacheSize];
-	CopyArray(ObjectCache, bubbleCopy, IntCacheSize);
-	Timing::getInstance()->startRecord(variant + "Bubble", true);
-	BubbleSort::Sort(bubbleCopy, IntCacheSize);
-	Timing::getInstance()->stopRecord(variant + "Bubble");
-	delete[] bubbleCopy;
-
-	ComplexObject* insertCopy = new ComplexObject[IntCacheSize];
-	CopyArray(ObjectCache, insertCopy, IntCacheSize);
-	Timing::getInstance()->startRecord(variant + "Insertion", true);
-	InsertionSort::Sort(insertCopy, IntCacheSize);
-	Timing::getInstance()->stopRecord(variant + "Insertion");
-	delete[] insertCopy;
-
-	ComplexObject* quickCopy = new ComplexObject[IntCacheSize];
-	CopyArray(ObjectCache, quickCopy, IntCacheSize);
-	Timing::getInstance()->startRecord(variant + "Quick", true);
-	QuickSort::Sort(quickCopy, IntCacheSize);
-	Timing::getInstance()->stopRecord(variant + "Quick");
-	delete[] quickCopy;
-
-	ComplexObject* bucketCopy = new ComplexObject[IntCacheSize];
-	CopyArray(ObjectCache, bucketCopy, IntCacheSize);
-	Timing::getInstance()->startRecord(variant + "Bucket", true);
-	BucketSort::Sort(bucketCopy, IntCacheSize);
-	Timing::getInstance()->stopRecord(variant + "Bucket");
-	delete[] bucketCopy;
-}
-
-void Variant4()
-{
-	std::string variant("Variant 4 - ");
-}
-
-void Variant5()
-{
-	std::string variant("Variant 5 - ");
-
-	ComplexObject* bubbleCopy = new ComplexObject[IntRamSize];
-	CopyArray(ObjectRam, bubbleCopy, IntRamSize);
-	Timing::getInstance()->startRecord(variant + "Bubble", true);
-	BubbleSort::Sort(bubbleCopy, IntRamSize);
-	Timing::getInstance()->stopRecord(variant + "Bubble");
-	delete[] bubbleCopy;
-
-	ComplexObject* insertCopy = new ComplexObject[IntRamSize];
-	CopyArray(ObjectRam, insertCopy, IntRamSize);
-	Timing::getInstance()->startRecord(variant + "Insertion", true);
-	InsertionSort::Sort(insertCopy, IntRamSize);
-	Timing::getInstance()->stopRecord(variant + "Insertion");
-	delete[] insertCopy;
-
-	ComplexObject* quickCopy = new ComplexObject[IntRamSize];
-	CopyArray(ObjectRam, quickCopy, IntRamSize);
-	Timing::getInstance()->startRecord(variant + "Quick", true);
-	QuickSort::Sort(quickCopy, IntRamSize);
-	Timing::getInstance()->stopRecord(variant + "Quick");
-	delete[] quickCopy;
-
-	ComplexObject* bucketCopy = new ComplexObject[IntRamSize];
-	CopyArray(ObjectRam, bucketCopy, IntRamSize);
-	Timing::getInstance()->startRecord(variant + "Bucket", true);
-	BucketSort::Sort(bucketCopy, IntRamSize);
-	Timing::getInstance()->stopRecord(variant + "Bucket");
-	delete[] bucketCopy;
-}
-
-void Variant6()
-{
-	std::string variant("Variant 6 - ");
-}
-
-void Variant7()
-{
-	std::string variant("Variant 7 - ");
-}
-
-void Variant8()
-{
-	std::string variant("Variant 8 - ");
 }
 
 void SetupIntArrays()
@@ -212,7 +109,7 @@ void SetupIntArrays()
 
 	for (size_t i = 0; i < IntCacheSize; i++)
 	{
-		IntCache[i] = Random(0, INT32_MAX);
+		IntCache[i] = Random(0, 20);
 	}
 	for (size_t i = 0; i < IntRamSize; i++)
 	{
@@ -305,198 +202,49 @@ void Cleanup()
 	delete[] ObjectPtrRam;
 }
 
-void VerifyIntSorting()
+template<typename T>
+void VerifySort(const std::string& verifyName, T* originalArray, size_t size)
 {
-	int* stdCopy = new int[IntCacheSize];
-	CopyArray(IntCache, stdCopy, IntCacheSize);
-	std::sort(stdCopy, stdCopy + IntCacheSize);
+	T* stdCopy = new T[size];
+	CopyArray(originalArray, stdCopy, size);
+	std::sort(stdCopy, stdCopy + size);
 
-	std::cout << "Verifying Int Bubble" << std::endl;
-	int* bubbleCopy = new int[IntCacheSize];
-	CopyArray(IntCache, bubbleCopy, IntCacheSize);
-	BubbleSort::Sort(bubbleCopy, IntCacheSize);
-	for (size_t i = 0; i < IntCacheSize; i++)
+	std::cout << "Verifying " << verifyName << " Bubble" << std::endl;
+	T* bubbleCopy = new T[size];
+	CopyArray(originalArray, bubbleCopy, size);
+	BubbleSort::Sort(bubbleCopy, size);
+	for (size_t i = 0; i < size; i++)
 	{
 		assert(stdCopy[i] == bubbleCopy[i]);
 	}
 	delete[] bubbleCopy;
 
-	std::cout << "Verifying Int Insert" << std::endl;
-	int* insertCopy = new int[IntCacheSize];
-	CopyArray(IntCache, insertCopy, IntCacheSize);
-	InsertionSort::Sort(insertCopy, IntCacheSize);
-	for (size_t i = 0; i < IntCacheSize; i++)
+	std::cout << "Verifying " << verifyName << " Insert" << std::endl;
+	T* insertCopy = new T[size];
+	CopyArray(originalArray, insertCopy, size);
+	InsertionSort::Sort(insertCopy, size);
+	for (size_t i = 0; i < size; i++)
 	{
 		assert(stdCopy[i] == insertCopy[i]);
 	}
 	delete[] insertCopy;
 
-	std::cout << "Verifying Int Quick" << std::endl;
-	int* quickCopy = new int[IntCacheSize];
-	CopyArray(IntCache, quickCopy, IntCacheSize);
-	QuickSort::Sort(quickCopy, IntCacheSize);
-	for (size_t i = 0; i < IntCacheSize; i++)
+	std::cout << "Verifying " << verifyName << " Quick" << std::endl;
+	T* quickCopy = new T[size];
+	CopyArray(originalArray, quickCopy, size);
+	QuickSort::Sort(quickCopy, size);
+	for (size_t i = 0; i < size; i++)
 	{
 		assert(stdCopy[i] == quickCopy[i]);
 	}
-	QuickSort::Sort(quickCopy, IntCacheSize);
+	QuickSort::Sort(quickCopy, size);
 	delete[] quickCopy;
 
-	std::cout << "Verifying Int Bucket" << std::endl;
-	int* bucketCopy = new int[IntCacheSize];
-	CopyArray(IntCache, bucketCopy, IntCacheSize);
-	BucketSort::Sort(bucketCopy, IntCacheSize);
-	for (size_t i = 0; i < IntCacheSize; i++)
-	{
-		assert(stdCopy[i] == bucketCopy[i]);
-	}
-	delete[] bucketCopy;
-
-	delete[] stdCopy;
-}
-
-void VerifyIntPtrSorting()
-{
-	int** stdCopy = new int*[IntCacheSize];
-	CopyArray(IntPtrCache, stdCopy, IntCacheSize);
-	std::sort(stdCopy, stdCopy + IntCacheSize);
-
-	std::cout << "Verifying IntPtr Bubble" << std::endl;
-	int** bubbleCopy = new int*[IntCacheSize];
-	CopyArray(IntPtrCache, bubbleCopy, IntCacheSize);
-	BubbleSort::Sort(bubbleCopy, IntCacheSize);
-	for (size_t i = 0; i < IntCacheSize; i++)
-	{
-		assert(stdCopy[i] == bubbleCopy[i]);
-	}
-	delete[] bubbleCopy;
-
-	std::cout << "Verifying IntPtr Insert" << std::endl;
-	int** insertCopy = new int*[IntCacheSize];
-	CopyArray(IntPtrCache, insertCopy, IntCacheSize);
-	InsertionSort::Sort(insertCopy, IntCacheSize);
-	for (size_t i = 0; i < IntCacheSize; i++)
-	{
-		assert(stdCopy[i] == insertCopy[i]);
-	}
-	delete[] insertCopy;
-
-	std::cout << "Verifying IntPtr Quick" << std::endl;
-	int** quickCopy = new int*[IntCacheSize];
-	CopyArray(IntPtrCache, quickCopy, IntCacheSize);
-	QuickSort::Sort(quickCopy, IntCacheSize);
-	for (size_t i = 0; i < IntCacheSize; i++)
-	{
-		assert(stdCopy[i] == quickCopy[i]);
-	}
-	QuickSort::Sort(quickCopy, IntCacheSize);
-	delete[] quickCopy;
-
-	std::cout << "Verifying IntPtr Bucket" << std::endl;
-	int** bucketCopy = new int*[IntCacheSize];
-	CopyArray(IntPtrCache, bucketCopy, IntCacheSize);
-	BucketSort::Sort(bucketCopy, IntCacheSize);
-	for (size_t i = 0; i < IntCacheSize; i++)
-	{
-		assert(stdCopy[i] == bucketCopy[i]);
-	}
-	delete[] bucketCopy;
-
-	delete[] stdCopy;
-}
-
-void VerifyObjectSorting()
-{
-	ComplexObject* stdCopy = new ComplexObject[ObjectCacheSize];
-	CopyArray(ObjectCache, stdCopy, ObjectCacheSize);
-	std::sort(stdCopy, stdCopy + ObjectCacheSize);
-
-	std::cout << "Verifying Object Bubble" << std::endl;
-	ComplexObject* bubbleCopy = new ComplexObject[ObjectCacheSize];
-	CopyArray(ObjectCache, bubbleCopy, ObjectCacheSize);
-	BubbleSort::Sort(bubbleCopy, ObjectCacheSize);
-	for (size_t i = 0; i < ObjectCacheSize; i++)
-	{
-		assert(stdCopy[i] == bubbleCopy[i]);
-	}
-	delete[] bubbleCopy;
-
-	std::cout << "Verifying Object Insert" << std::endl;
-	ComplexObject* insertCopy = new ComplexObject[ObjectCacheSize];
-	CopyArray(ObjectCache, insertCopy, ObjectCacheSize);
-	InsertionSort::Sort(insertCopy, ObjectCacheSize);
-	for (size_t i = 0; i < ObjectCacheSize; i++)
-	{
-		assert(stdCopy[i] == insertCopy[i]);
-	}
-	delete[] insertCopy;
-
-	std::cout << "Verifying Object Quick" << std::endl;
-	ComplexObject* quickCopy = new ComplexObject[ObjectCacheSize];
-	CopyArray(ObjectCache, quickCopy, ObjectCacheSize);
-	QuickSort::Sort(quickCopy, ObjectCacheSize);
-	for (size_t i = 0; i < ObjectCacheSize; i++)
-	{
-		assert(stdCopy[i] == quickCopy[i]);
-	}
-	QuickSort::Sort(quickCopy, ObjectCacheSize);
-	delete[] quickCopy;
-
-	std::cout << "Verifying Object Bucket" << std::endl;
-	ComplexObject* bucketCopy = new ComplexObject[ObjectCacheSize];
-	CopyArray(ObjectCache, bucketCopy, ObjectCacheSize);
-	BucketSort::Sort(bucketCopy, ObjectCacheSize);
-	for (size_t i = 0; i < ObjectCacheSize; i++)
-	{
-		assert(stdCopy[i] == bucketCopy[i]);
-	}
-	delete[] bucketCopy;
-
-	delete[] stdCopy;
-}
-
-void VerifyObjectPtrSorting()
-{
-	ComplexObject** stdCopy = new ComplexObject*[ObjectCacheSize];
-	CopyArray(ObjectPtrCache, stdCopy, ObjectCacheSize);
-	std::sort(stdCopy, stdCopy + ObjectCacheSize);
-
-	std::cout << "Verifying ObjectPtr Bubble" << std::endl;
-	ComplexObject** bubbleCopy = new ComplexObject*[ObjectCacheSize];
-	CopyArray(ObjectPtrCache, bubbleCopy, ObjectCacheSize);
-	BubbleSort::Sort(bubbleCopy, ObjectCacheSize);
-	for (size_t i = 0; i < ObjectCacheSize; i++)
-	{
-		assert(stdCopy[i] == bubbleCopy[i]);
-	}
-	delete[] bubbleCopy;
-
-	std::cout << "Verifying ObjectPtr Insert" << std::endl;
-	ComplexObject** insertCopy = new ComplexObject*[ObjectCacheSize];
-	CopyArray(ObjectPtrCache, insertCopy, ObjectCacheSize);
-	InsertionSort::Sort(insertCopy, ObjectCacheSize);
-	for (size_t i = 0; i < ObjectCacheSize; i++)
-	{
-		assert(stdCopy[i] == insertCopy[i]);
-	}
-	delete[] insertCopy;
-
-	std::cout << "Verifying ObjectPtr Quick" << std::endl;
-	ComplexObject** quickCopy = new ComplexObject*[ObjectCacheSize];
-	CopyArray(ObjectPtrCache, quickCopy, ObjectCacheSize);
-	QuickSort::Sort(quickCopy, ObjectCacheSize);
-	for (size_t i = 0; i < ObjectCacheSize; i++)
-	{
-		assert(stdCopy[i] == quickCopy[i]);
-	}
-	QuickSort::Sort(quickCopy, ObjectCacheSize);
-	delete[] quickCopy;
-
-	std::cout << "Verifying ObjectPtr Bucket" << std::endl;
-	ComplexObject** bucketCopy = new ComplexObject*[ObjectCacheSize];
-	CopyArray(ObjectPtrCache, bucketCopy, ObjectCacheSize);
-	BucketSort::Sort(bucketCopy, ObjectCacheSize);
-	for (size_t i = 0; i < ObjectCacheSize; i++)
+	std::cout << "Verifying " << verifyName << " Bucket" << std::endl;
+	T* bucketCopy = new T[size];
+	CopyArray(originalArray, bucketCopy, size);
+	BucketSort::Sort(bucketCopy, size);
+	for (size_t i = 0; i < size; i++)
 	{
 		assert(stdCopy[i] == bucketCopy[i]);
 	}
@@ -507,10 +255,12 @@ void VerifyObjectPtrSorting()
 
 void VerifySorting()
 {
-	VerifyIntSorting();
-	VerifyIntPtrSorting();
-	VerifyObjectSorting();
-	VerifyObjectPtrSorting();
+	VerifySort("Int", IntCache, IntCacheSize);
+	PrintArray(IntPtrCache, IntCacheSize);
+	VerifySort("IntPtr", IntPtrCache, IntCacheSize);
+	PrintArray(IntPtrCache, IntCacheSize);
+	VerifySort("Object", ObjectCache, ObjectCacheSize);
+	VerifySort("ObjectPtr", ObjectPtrCache, ObjectCacheSize);
 }
 
 int main(int argc, char** argv)
@@ -525,14 +275,14 @@ int main(int argc, char** argv)
 	}
 	else
 	{
-		Variant1();
-		Variant2();
-		Variant3();
-		Variant4();
-		Variant5();
-		Variant6();
-		Variant7();
-		Variant8();
+		VariantTest("Variant 1 - ", IntCache, IntCacheSize);
+		VariantTest("Variant 2 - ", IntRam, IntRamSize);
+		VariantTest("Variant 3 - ", ObjectCache, ObjectCacheSize);
+		VariantTest("Variant 4 - ", IntPtrCache, IntCacheSize);
+		VariantTest("Variant 5 - ", ObjectRam, ObjectRamSize);
+		VariantTest("Variant 6 - ", IntPtrRam, IntRamSize);
+		VariantTest("Variant 7 - ", ObjectPtrCache, ObjectCacheSize);
+		VariantTest("Variant 8 - ", ObjectPtrRam, ObjectRamSize);
 
 		Timing::getInstance()->print();
 	}
