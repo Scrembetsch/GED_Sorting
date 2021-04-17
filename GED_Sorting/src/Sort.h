@@ -26,11 +26,30 @@ namespace Sort
 
 namespace BubbleSort
 {
-    template<typename T, typename C>
-    void Sort(T* arr, size_t size, C compare)
-    {
-        std::sort(arr, arr + size, compare);
-    }
+	template<typename T, typename C>
+	void Sort(T* arr, size_t size, C compare)
+	{
+        bool swaped = false;
+
+		for (int x = 0; x <(size - 1); x++)
+		{
+            swaped = false;
+
+			for (int y = 0; y < ((size - x) - 1); y++)
+			{
+				if (compare(arr[y + 1], arr[y]))
+				{
+                    std::swap(arr[y + 1], arr[y]);
+                    swaped = true;
+				}
+            }
+
+            if (swaped == false)
+            {
+                break;
+            }
+		}
+	}
 }
 
 namespace InsertionSort
