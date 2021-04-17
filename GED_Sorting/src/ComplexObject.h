@@ -75,3 +75,17 @@ bool operator>=(const ComplexObject& lhs, const ComplexObject& rhs)
 	return !(lhs < rhs);
 }
 
+bool operator==(const ComplexObject& lhs, const ComplexObject& rhs)
+{
+	return lhs.key == rhs.key
+		&& lhs.a == rhs.a
+		&& lhs.b == rhs.b
+		&& lhs.c == rhs.c
+		&& lhs.d == rhs.d
+		&& lhs.e == rhs.e;
+}
+
+bool operator!=(const ComplexObject& lhs, const ComplexObject& rhs)
+{
+	return !(lhs == rhs);
+}

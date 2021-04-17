@@ -24,12 +24,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ArgumentParser.h" />
-    <ClInclude Include="src\BubbleSort.h" />
-    <ClInclude Include="src\BucketSort.h" />
     <ClInclude Include="src\ComplexObject.h" />
-    <ClInclude Include="src\InsertionSort.h" />
-    <ClInclude Include="src\QuickSort.h" />
     <ClInclude Include="src\Random.h" />
+    <ClInclude Include="src\Sort.h" />
     <ClInclude Include="src\Timing.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

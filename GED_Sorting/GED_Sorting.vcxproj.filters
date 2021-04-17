@@ -26,18 +26,6 @@
     <ClInclude Include="src\ArgumentParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\InsertionSort.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BubbleSort.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\QuickSort.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BucketSort.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\ComplexObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -45,6 +33,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Timing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Sort.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
