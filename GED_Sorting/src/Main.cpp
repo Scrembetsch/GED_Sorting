@@ -13,7 +13,7 @@
 
 const size_t IntCacheSize = 10;
 const size_t IntRamSize = 100000;
-const size_t ObjectCacheSize = 1000;
+const size_t ObjectCacheSize = 10;
 const size_t ObjectRamSize = 100000;
 
 int* IntCache;
@@ -100,6 +100,13 @@ void VariantTest(const std::string& variant, T* originalArray, size_t size)
 	BucketSort::Sort(bucketCopy, size);
 	Timing::getInstance()->stopRecord(variant + "Bucket");
 	delete[] bucketCopy;
+
+	T* stdCopy = new T[size];
+	CopyArray(originalArray, stdCopy, size);
+	Timing::getInstance()->startRecord(variant + "Std", true);
+	std::sort(stdCopy, stdCopy + size);
+	Timing::getInstance()->stopRecord(variant + "Std");
+	delete[] stdCopy;
 }
 
 void SetupIntArrays()
@@ -237,7 +244,6 @@ void VerifySort(const std::string& verifyName, T* originalArray, size_t size)
 	{
 		assert(stdCopy[i] == quickCopy[i]);
 	}
-	QuickSort::Sort(quickCopy, size);
 	delete[] quickCopy;
 
 	std::cout << "Verifying " << verifyName << " Bucket" << std::endl;
@@ -256,9 +262,7 @@ void VerifySort(const std::string& verifyName, T* originalArray, size_t size)
 void VerifySorting()
 {
 	VerifySort("Int", IntCache, IntCacheSize);
-	PrintArray(IntPtrCache, IntCacheSize);
 	VerifySort("IntPtr", IntPtrCache, IntCacheSize);
-	PrintArray(IntPtrCache, IntCacheSize);
 	VerifySort("Object", ObjectCache, ObjectCacheSize);
 	VerifySort("ObjectPtr", ObjectPtrCache, ObjectCacheSize);
 }

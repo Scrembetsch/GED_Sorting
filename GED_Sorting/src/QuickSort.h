@@ -5,33 +5,30 @@
 namespace QuickSort
 {
 	template<typename T>
-	size_t Partition(T* arr, size_t begin, size_t end)
+	T* Partition(T*, T* begin, T* end)
 	{
-        size_t pivot = end;
-        size_t i = begin;
+        T* pivot = end;
+        T* i = begin;
 
-        for (size_t j = begin; j < end; j++)
+        for (T* j = begin; j < end; j++)
         {
-            if (arr[j] < arr[pivot])
+            if (*j < *pivot)
             {
-                std::swap(arr[i], arr[j]);
+                std::swap(*i, *j);
                 i++;
             }
         }
-        std::swap(arr[i], arr[end]);
+        std::swap(*i, *end);
         return i;
 	}
 
 	template<typename T>
-	void QuickSort(T* arr, size_t begin, size_t end)
+	void QuickSort(T* arr, T* begin, T* end)
 	{
         if (begin < end)
         {
-            size_t pi = Partition(arr, begin, end);
-            if (pi > 0) // If is needed because size_t can underflow
-            {
-                QuickSort(arr, begin, pi - 1);
-            }
+            T* pi = Partition(arr, begin, end);
+            QuickSort(arr, begin, pi - 1);
             QuickSort(arr, pi + 1, end);
         }
 	}
@@ -39,6 +36,6 @@ namespace QuickSort
     template<typename T>
     void Sort(T* arr, size_t size)
     {
-        QuickSort(arr, 0, size - 1);
+        QuickSort(arr, arr, arr + size - 1);
     }
 }
