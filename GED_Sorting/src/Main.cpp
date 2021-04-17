@@ -8,10 +8,10 @@
 #include "ComplexObject.h"
 #include "Sort.h"
 
-const size_t IntCacheSize = 10;
-const size_t IntRamSize = 100000;
-const size_t ObjectCacheSize = 10;
-const size_t ObjectRamSize = 100000;
+const size_t IntCacheSize = 100000;
+const size_t IntRamSize = 10000000;
+const size_t ObjectCacheSize = 100000;
+const size_t ObjectRamSize = 10000000;
 
 int* IntCache;
 int* IntRam;
