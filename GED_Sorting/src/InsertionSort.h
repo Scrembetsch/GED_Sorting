@@ -6,7 +6,7 @@ namespace InsertionSort
     void Sort(T* arr, size_t size)
     {
         size_t curr;
-        for (int i = 0; i < size - 1; i++)
+        for (size_t i = 0; i < size - 1; i++)
         {
             curr = i + 1;
             while (curr > 0 && arr[curr] < arr[curr - 1])

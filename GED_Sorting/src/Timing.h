@@ -18,7 +18,7 @@ public:
 	void startFinalization();
 	void stopFinalization();
 
-	void startRecord(const std::string& name);
+	void startRecord(const std::string& name, bool print = false);
 	void stopRecord(const std::string& name);
 	void print(const bool prettyPrint = false) const;
 	std::string getResults() const;

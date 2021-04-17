@@ -25,7 +25,12 @@ void Timing::clear()
 /**
  * Start recording time with any name.
  */
-void Timing::startRecord(const std::string& name) {
+void Timing::startRecord(const std::string& name, bool print) {
+	if (print)
+	{
+		std::cout << "Start Record: " << name << std::endl;
+	}
+
 	auto start = std::chrono::high_resolution_clock::now();
 
 	auto it = mRecordings.find(name);
@@ -34,6 +39,7 @@ void Timing::startRecord(const std::string& name) {
 	} else {
 		mRecordings.insert(std::pair<std::string, std::chrono::high_resolution_clock::time_point>(name, start));
 	}
+
 
 }
 

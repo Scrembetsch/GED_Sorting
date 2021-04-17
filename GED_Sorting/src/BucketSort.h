@@ -30,14 +30,16 @@ namespace BucketSort
         }
 
         // 3) Sort individual buckets
-        for (int i = 0; i < n; i++)
+        for (size_t i = 0; i < n; i++)
             std::sort(b[i].begin(), b[i].end());
 
         // 4) Concatenate all buckets into arr[]
-        int index = 0;
-        for (int i = 0; i < n; i++)
-            for (int j = 0; j < b[i].size(); j++)
+        size_t index = 0;
+        for (size_t i = 0; i < n; i++)
+            for (size_t j = 0; j < b[i].size(); j++)
                 arr[index++] = b[i][j];
+
+        delete[] b;
     }
 
     template<typename T>
