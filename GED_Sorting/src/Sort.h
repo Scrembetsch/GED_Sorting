@@ -100,19 +100,19 @@ namespace BucketSort
 
         // 2) Put array elements
         // in different buckets
-        T min = arr[0];
-        T max = arr[0];
+        size_t min = getIntFunction(arr[0]);
+        size_t max = getIntFunction(arr[0]);
         for (size_t i = 0; i < n; i++)
         {
-            min = compare(arr[i], min) ? arr[i] : min;
-            max = compare(arr[i], max) ? max : arr[i];
+            min = std::min(getIntFunction(arr[i]), min);
+            max = std::max(getIntFunction(arr[i]), max);
         }
 
-        float range = (getIntFunction(max) - getIntFunction(min)) / n + 1;
+        float range = (max - min) / n + 1;
 
         for (size_t i = 0; i < n; i++)
         {
-            size_t bi = (getIntFunction(arr[i]) - getIntFunction(min)) / range; // Index in bucket
+            size_t bi = (getIntFunction(arr[i]) - min) / range; // Index in bucket
             b[bi].push_back(arr[i]);
         }
 
