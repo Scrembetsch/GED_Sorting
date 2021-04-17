@@ -36,6 +36,18 @@ bool EqualsPtr(const T& a, const T& b)
 }
 
 template<typename T>
+size_t GetInt(const T& a)
+{
+	return size_t(a);
+}
+
+template<typename T>
+size_t GetIntPtr(const T& a)
+{
+	return size_t(*a);
+}
+
+template<typename T>
 void CopyArray(T* original, T* destination, size_t size)
 {
 	for (size_t i = 0; i < size; i++)
@@ -80,7 +92,7 @@ void PrintArray(ComplexObject** arr, size_t size)
 }
 
 template<typename T, typename C>
-void VariantTest(const std::string& variant, T* originalArray, size_t size, C compare)
+void VariantTest(const std::string& variant, T* originalArray, size_t size, C compare, size_t(*getIntFunction)(const T&))
 {
 	T* bubbleCopy = new T[size];
 	CopyArray(originalArray, bubbleCopy, size);
@@ -106,7 +118,7 @@ void VariantTest(const std::string& variant, T* originalArray, size_t size, C co
 	T* bucketCopy = new T[size];
 	CopyArray(originalArray, bucketCopy, size);
 	Timing::getInstance()->startRecord(variant + "Bucket", true);
-	//BucketSort::Sort(bucketCopy, size, compare);
+	BucketSort::Sort(bucketCopy, size, compare, getIntFunction);
 	Timing::getInstance()->stopRecord(variant + "Bucket");
 	delete[] bucketCopy;
 }
@@ -212,7 +224,7 @@ void Cleanup()
 }
 
 template<typename T, typename C>
-void VerifySort(const std::string& verifyName, T* originalArray, size_t size, C compare, bool(*compareFunction)(const T&, const T&))
+void VerifySort(const std::string& verifyName, T* originalArray, size_t size, C compare, bool(*compareFunction)(const T&, const T&), size_t(*getIntFunction)(const T&))
 {
 	std::cout << "Original: ";
 	PrintArray(originalArray, size);
@@ -257,7 +269,7 @@ void VerifySort(const std::string& verifyName, T* originalArray, size_t size, C 
 	std::cout << "Verifying " << verifyName << " Bucket" << std::endl;
 	T* bucketCopy = new T[size];
 	CopyArray(originalArray, bucketCopy, size);
-	BucketSort::Sort(bucketCopy, size, compare);
+	BucketSort::Sort(bucketCopy, size, compare, getIntFunction);
 	PrintArray(bucketCopy, size);
 	for (size_t i = 0; i < size; i++)
 	{
@@ -270,10 +282,10 @@ void VerifySort(const std::string& verifyName, T* originalArray, size_t size, C 
 
 void VerifySorting()
 {
-	VerifySort("Int", IntCache, IntCacheSize, Sort::Lesser<>{}, &Equals);
-	VerifySort("IntPtr", IntPtrCache, IntCacheSize, Sort::LesserPtr<>{}, &EqualsPtr);
-	VerifySort("Object", ObjectCache, ObjectCacheSize, Sort::Lesser<>{}, &Equals);
-	VerifySort("ObjectPtr", ObjectPtrCache, ObjectCacheSize, Sort::LesserPtr<>{}, &EqualsPtr);
+	VerifySort("Int", IntCache, IntCacheSize, Sort::Lesser<>{}, &Equals, &GetInt);
+	VerifySort("IntPtr", IntPtrCache, IntCacheSize, Sort::LesserPtr<>{}, &EqualsPtr, &GetIntPtr);
+	VerifySort("Object", ObjectCache, ObjectCacheSize, Sort::Lesser<>{}, &Equals, &GetInt);
+	VerifySort("ObjectPtr", ObjectPtrCache, ObjectCacheSize, Sort::LesserPtr<>{}, &EqualsPtr, &GetIntPtr);
 }
 
 int main(int argc, char** argv)
@@ -288,14 +300,14 @@ int main(int argc, char** argv)
 	}
 	else
 	{
-		VariantTest("Variant 1 - ", IntCache, IntCacheSize, Sort::Lesser<>{});
-		VariantTest("Variant 2 - ", IntRam, IntRamSize, Sort::Lesser<>{});
-		VariantTest("Variant 3 - ", ObjectCache, ObjectCacheSize, Sort::Lesser<>{});
-		VariantTest("Variant 4 - ", IntPtrCache, IntCacheSize, Sort::LesserPtr<>{});
-		VariantTest("Variant 5 - ", ObjectRam, ObjectRamSize, Sort::Lesser<>{});
-		VariantTest("Variant 6 - ", IntPtrRam, IntRamSize, Sort::LesserPtr<>{});
-		VariantTest("Variant 7 - ", ObjectPtrCache, ObjectCacheSize, Sort::LesserPtr<>{});
-		VariantTest("Variant 8 - ", ObjectPtrRam, ObjectRamSize, Sort::LesserPtr<>{});
+		VariantTest("Variant 1 - ", IntCache, IntCacheSize, Sort::Lesser<>{}, &GetInt);
+		VariantTest("Variant 2 - ", IntRam, IntRamSize, Sort::Lesser<>{}, &GetInt);
+		VariantTest("Variant 3 - ", ObjectCache, ObjectCacheSize, Sort::Lesser<>{}, &GetInt);
+		VariantTest("Variant 4 - ", IntPtrCache, IntCacheSize, Sort::LesserPtr<>{}, &GetIntPtr);
+		VariantTest("Variant 5 - ", ObjectRam, ObjectRamSize, Sort::Lesser<>{}, &GetInt);
+		VariantTest("Variant 6 - ", IntPtrRam, IntRamSize, Sort::LesserPtr<>{}, &GetIntPtr);
+		VariantTest("Variant 7 - ", ObjectPtrCache, ObjectCacheSize, Sort::LesserPtr<>{}, &GetIntPtr);
+		VariantTest("Variant 8 - ", ObjectPtrRam, ObjectRamSize, Sort::LesserPtr<>{}, &GetIntPtr);
 
 		Timing::getInstance()->print();
 	}

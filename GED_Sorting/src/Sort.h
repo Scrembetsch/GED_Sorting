@@ -92,7 +92,7 @@ namespace QuickSort
 namespace BucketSort
 {
     template<typename T, typename C>
-    void BucketSort(T* arr, size_t n, C compare)
+    void BucketSort(T* arr, size_t n, C compare, size_t(*getIntFunction)(const T&))
     {
 
         // 1) Create n empty buckets
@@ -108,11 +108,11 @@ namespace BucketSort
             max = compare(arr[i], max) ? max : arr[i];
         }
 
-        float range = (size_t(max) - size_t(min)) / n + 1;
+        float range = (getIntFunction(max) - getIntFunction(min)) / n + 1;
 
         for (size_t i = 0; i < n; i++)
         {
-            size_t bi = (size_t(arr[i]) - size_t(min)) / range; // Index in bucket
+            size_t bi = (getIntFunction(arr[i]) - getIntFunction(min)) / range; // Index in bucket
             b[bi].push_back(arr[i]);
         }
 
@@ -130,8 +130,8 @@ namespace BucketSort
     }
 
     template<typename T, typename C>
-    void Sort(T* arr, size_t size, C compare)
+    void Sort(T* arr, size_t size, C compare, size_t(*getIntFunction)(const T&))
     {
-        BucketSort(arr, size, compare);
+        BucketSort(arr, size, compare, getIntFunction);
     }
 }

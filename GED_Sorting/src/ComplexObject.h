@@ -5,8 +5,8 @@
 
 struct ComplexObject
 {
-	ComplexObject(size_t key = 0)
-		: key(key)
+	ComplexObject()
+		: key(Random(0, INT32_MAX))
 		, a(Random(0, INT32_MAX))
 		, b(Random(0, INT32_MAX))
 		, c(Random(0, INT32_MAX))
@@ -41,7 +41,7 @@ struct ComplexObject
 bool operator<(const ComplexObject& lhs, const ComplexObject& rhs)
 {
 	// go from a to e, with a having highest priority
-	if (lhs.a != rhs.a)
+	/*if (lhs.a != rhs.a)
 	{
 		return lhs.a < rhs.a;
 	}
@@ -57,7 +57,8 @@ bool operator<(const ComplexObject& lhs, const ComplexObject& rhs)
 	{
 		return lhs.d < rhs.d;
 	}
-	return lhs.e < rhs.e;
+	return lhs.e < rhs.e;*/
+	return lhs.key < rhs.key;
 }
 
 bool operator>(const ComplexObject& lhs, const ComplexObject& rhs)
