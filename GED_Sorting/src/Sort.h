@@ -31,11 +31,11 @@ namespace BubbleSort
 	{
         bool swaped = false;
 
-		for (int x = 0; x <(size - 1); x++)
+		for (size_t x = 0; x <(size - 1); x++)
 		{
             swaped = false;
 
-			for (int y = 0; y < ((size - x) - 1); y++)
+			for (size_t y = 0; y < ((size - x) - 1); y++)
 			{
 				if (compare(arr[y + 1], arr[y]))
 				{

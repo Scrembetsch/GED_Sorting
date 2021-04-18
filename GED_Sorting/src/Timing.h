@@ -21,6 +21,7 @@ public:
 	void startRecord(const std::string& name, bool print = false);
 	void stopRecord(const std::string& name);
 	void print(const bool prettyPrint = false) const;
+	double getRecord(const std::string& name) const;
 	std::string getResults() const;
 
 private:

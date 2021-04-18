@@ -40,24 +40,6 @@ struct ComplexObject
 
 bool operator<(const ComplexObject& lhs, const ComplexObject& rhs)
 {
-	// go from a to e, with a having highest priority
-	/*if (lhs.a != rhs.a)
-	{
-		return lhs.a < rhs.a;
-	}
-	if (lhs.b != rhs.b)
-	{
-		return lhs.b < rhs.b;
-	}
-	if (lhs.c != rhs.c)
-	{
-		return lhs.c < rhs.c;
-	}
-	if (lhs.d != rhs.d)
-	{
-		return lhs.d < rhs.d;
-	}
-	return lhs.e < rhs.e;*/
 	return lhs.key < rhs.key;
 }
 

@@ -79,6 +79,11 @@ void Timing::print(const bool prettyPrint) const {
 	//std::cout << "-----" << std::endl;
 }
 
+double Timing::getRecord(const std::string& name) const
+{
+	return mResults.find(name)->second.count();
+}
+
 /**
  * Parse date from ms to mm:ss.ms.
  */
