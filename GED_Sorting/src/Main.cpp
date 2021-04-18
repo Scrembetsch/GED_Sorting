@@ -10,8 +10,10 @@
 #include "ComplexObject.h"
 #include "Sort.h"
 
+// Number of elements if the array should fit into the cache
 const size_t IntCacheSize = 100000;
 const size_t IntRamSize = 10000000;
+// Number of elements if the array should not fit into the cache
 const size_t ObjectCacheSize = 100000;
 const size_t ObjectRamSize = 10000000;
 
@@ -104,6 +106,7 @@ void VariantTest(const std::string& variant, T* originalArray, size_t size, C co
 {
 	if (size < 500000)
 	{
+		// Bubble Sort
 		T* bubbleCopy = new T[size];
 		CopyArray(originalArray, bubbleCopy, size);
 		Timing::getInstance()->startRecord(variant + Bubble, true);
@@ -111,6 +114,7 @@ void VariantTest(const std::string& variant, T* originalArray, size_t size, C co
 		Timing::getInstance()->stopRecord(variant + Bubble);
 		delete[] bubbleCopy;
 
+		// Insertion Sort
 		T* insertCopy = new T[size];
 		CopyArray(originalArray, insertCopy, size);
 		Timing::getInstance()->startRecord(variant + Insertion, true);
@@ -128,7 +132,7 @@ void VariantTest(const std::string& variant, T* originalArray, size_t size, C co
 		std::cout << "Bubble & Insertion sort were skipped!" << std::endl;
 	}
 
-
+	// Quick Sort
 	T* quickCopy = new T[size];
 	CopyArray(originalArray, quickCopy, size);
 	Timing::getInstance()->startRecord(variant + Quick, true);
@@ -136,6 +140,7 @@ void VariantTest(const std::string& variant, T* originalArray, size_t size, C co
 	Timing::getInstance()->stopRecord(variant + Quick);
 	delete[] quickCopy;
 
+	// Bucket Sort
 	T* bucketCopy = new T[size];
 	CopyArray(originalArray, bucketCopy, size);
 	Timing::getInstance()->startRecord(variant + Bucket, true);
@@ -143,6 +148,7 @@ void VariantTest(const std::string& variant, T* originalArray, size_t size, C co
 	Timing::getInstance()->stopRecord(variant + Bucket);
 	delete[] bucketCopy;
 
+	// Std::sort
 	T* stdCopy = new T[size];
 	CopyArray(originalArray, stdCopy, size);
 	Timing::getInstance()->startRecord(variant + Std, true);
@@ -151,6 +157,7 @@ void VariantTest(const std::string& variant, T* originalArray, size_t size, C co
 	delete[] stdCopy;
 }
 
+// Setup arrays that contain simple integers
 void SetupIntArrays()
 {
 	IntCache = new int[IntCacheSize];
@@ -166,6 +173,7 @@ void SetupIntArrays()
 	}
 }
 
+// Setup arrays that contain more complex objects (instead of simple integers)
 void SetupObjectArrays()
 {
 	ObjectCache = new ComplexObject[ObjectCacheSize];
@@ -181,6 +189,7 @@ void SetupObjectArrays()
 	}
 }
 
+// Setup arrays that contain pointers to simple integers
 void SetupIntPtrArrays()
 {
 	IntPtrCache = new int*[IntCacheSize];
@@ -196,6 +205,7 @@ void SetupIntPtrArrays()
 	}
 }
 
+// Setup arrays that contain pointers to more complex objects (instead of simple integers)
 void SetupObjectPtrArrays()
 {
 	ObjectPtrCache = new ComplexObject*[ObjectCacheSize];
@@ -219,6 +229,7 @@ void SetupArrays()
 	SetupObjectPtrArrays();
 }
 
+// Delete all previously allocated memory
 void Cleanup()
 {
 	Timing::getInstance()->clear();
@@ -251,6 +262,7 @@ void Cleanup()
 	delete[] ObjectPtrRam;
 }
 
+// Function for verifying if all algorithms sorted the given data correctly
 template<typename T, typename C>
 void VerifySort(const std::string& verifyName, T* originalArray, size_t size, C compare, bool(*compareFunction)(const T&, const T&), size_t(*getIntFunction)(const T&))
 {
@@ -351,11 +363,12 @@ int main(int argc, char** argv)
 	}
 	else
 	{
-		int loops = arg.GetInt("-l", "--loops", 1);
+		int loops = arg.GetInt("-l", "--loops", 1);		// Number of iterations for more accurate results
 		for (int i = 0; i < loops; i++)
 		{
 			SetupArrays();
 
+			// Test all 8 variants - see documentation for more information
 			VariantTest("Variant 1 - ", IntCache, IntCacheSize, Sort::Lesser<>{}, & GetInt);
 			VariantTest("Variant 2 - ", IntRam, IntRamSize, Sort::Lesser<>{}, & GetInt);
 			VariantTest("Variant 3 - ", ObjectCache, ObjectCacheSize, Sort::Lesser<>{}, & GetInt);
@@ -389,6 +402,7 @@ int main(int argc, char** argv)
 			Cleanup();
 		}
 
+		// Print results
 		for (int j = 1; j <= 8; j++)
 		{
 			std::string variant = "Variant " + std::to_string(j) + " - ";
@@ -400,6 +414,5 @@ int main(int argc, char** argv)
 			std::cout << "- " << Std << ": " << ParseTime(times.at(variant + Std) / loops) << std::endl;
 		}
 
-		// Print results
 	}
 }
