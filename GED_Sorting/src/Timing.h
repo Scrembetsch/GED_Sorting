@@ -28,7 +28,7 @@ private:
 	Timing() {};
 	std::map<std::string, std::chrono::high_resolution_clock::time_point > mRecordings;
 	std::map<std::string, std::chrono::duration<double, std::milli> > mResults;
-	std::string parseDate(const int ms) const;
+	static std::string parseDate(const int ms);
 
 	static Timing* mInstance;
 };

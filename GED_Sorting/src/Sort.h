@@ -29,22 +29,20 @@ namespace BubbleSort
 	template<typename T, typename C>
 	void Sort(T* arr, size_t size, C compare)
 	{
-        bool swaped = false;
-
 		for (size_t x = 0; x <(size - 1); x++)
 		{
-            swaped = false;
+            bool swapped = false;
 
 			for (size_t y = 0; y < ((size - x) - 1); y++)
 			{
 				if (compare(arr[y + 1], arr[y]))
 				{
                     std::swap(arr[y + 1], arr[y]);
-                    swaped = true;
+                    swapped = true;
 				}
             }
 
-            if (swaped == false)
+            if (swapped == false)
             {
                 break;
             }
@@ -57,10 +55,9 @@ namespace InsertionSort
     template<typename T, typename C>
     void Sort(T* arr, size_t size, C compare)
     {
-        size_t curr;
         for (size_t i = 0; i < size - 1; i++)
         {
-            curr = i + 1;
+            size_t curr = i + 1;
             while (curr > 0 && compare(arr[curr], arr[curr - 1]))
             {
                 std::swap(arr[curr], arr[curr - 1]);

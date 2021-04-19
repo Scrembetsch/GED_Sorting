@@ -87,7 +87,7 @@ double Timing::getRecord(const std::string& name) const
 /**
  * Parse date from ms to mm:ss.ms.
  */
-std::string Timing::parseDate(const int ms) const {
+std::string Timing::parseDate(const int ms) {
 	int minutes = (int) (ms / 1000 / 60);
 	int seconds = (int) ((ms % (1000 * 60)) / 1000);
 	int milliseconds = (int) (ms % 1000);
